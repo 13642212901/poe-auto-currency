@@ -1,5 +1,5 @@
-#Include, listen.ahk
-#Include, unit.ahk
+#Include, Listen.ahk
+#Include, Unit.ahk
 
 class App 
 {
