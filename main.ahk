@@ -1,26 +1,88 @@
+#ifWinActive,ahk_exe pathofexile_x64.exe
+hasRun := 2
+history := 0
 #Include, App.ahk
-#Include, TestListen.ahk
-#Include, ImageListen.ahk
+#Include, Config.ahk
 
-app := new App
 
-l1 := new TestListen
-app.Append(l1)
+alt := new App("alteration")
+chance := new App("chance")
+anc := new App("ancient")
+alc := new App("alchemy")
+chaos := new App("chaos")
 
-l2 := new ImageListen
-app.Append(l2)
-
-app.Run()
-
-w::
-    l2.Hit()
+!a::
+if (hasRun = 2) {
+	history := 1
+    hasRun := 1
+    alt.Run()
+    hasRun := 2
+}
 return
 
-q::
-    l1.Hit()
+!d::
+if (hasRun = 2) {
+	history := 2
+    hasRun := 1
+    chance.Run()
+    hasRun := 2
+}
 return
 
-; y::
-;     Send ^c
-;     MsgBox, %clipboard%
-; return
+!f::
+if (hasRun = 2) {
+	history := 3
+    hasRun := 1
+    anc.Run()
+    hasRun := 2
+}
+return
+
+!g::
+if (hasRun = 2) {
+	history := 4
+    hasRun := 1
+    alc.Run()
+    hasRun := 2
+}
+return
+
+!h::
+if (hasRun = 2) {
+	history := 5
+    hasRun := 1
+    chaos.Run()
+    hasRun := 2
+}
+return
+
+!s::
+    alt.Stop()
+    chance.Stop()
+    anc.Stop()
+    alc.Stop()
+    chaos.Stop()
+return
+^s::
+	Switch history {
+	Case 1:
+	    alt.ReStart()
+	Case 2:
+	    chance.ReStart()
+	Case 3:
+	    anc.ReStart()
+	Case 4:
+	    alc.ReStart()
+	Case 5:
+	    chaos.ReStart()
+	}
+return
+
+!c::
+if (hasRun = 2) {
+	MouseGetPos, xpos, ypos
+	msg := xpos . "," . ypos
+	MsgBox, %msg%
+	Clipboard := msg
+}
+return
