@@ -16,6 +16,9 @@ class App {
         if (A_ScreenWidth >= 3840) {
             this.c := new Config("config_4k.ini")
         }
+        if (A_ScreenWidth < 1980) {
+            this.c := new Config("config_mini.ini")
+        }
     }
     initCoordinate(c, name) {
         this.scouring := new CoordinateGroup(c.GetType("scouring"))
