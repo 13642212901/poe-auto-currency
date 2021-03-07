@@ -7,7 +7,7 @@ class App {
         this.name := name
     }
     initConfig() {
-        if (A_ScreenWidth >= 1980 && A_ScreenWidth < 2560) {
+        if (A_ScreenWidth >= 1920 && A_ScreenWidth < 2560) {
             this.c := new Config("config_1080.ini")
         }
         if (A_ScreenWidth >= 2560 && A_ScreenWidth < 3840) {
@@ -16,7 +16,7 @@ class App {
         if (A_ScreenWidth >= 3840) {
             this.c := new Config("config_4k.ini")
         }
-        if (A_ScreenWidth < 1980) {
+        if (A_ScreenWidth < 1920) {
             this.c := new Config("config_mini.ini")
         }
     }
@@ -93,7 +93,7 @@ class App {
         l := this.l
         Send ^c
         input := Clipboard
-        Loop, 20 {
+        Loop, 50 {
             if (input = lastClipboard) {
                 input := Clipboard
                 sleep, 10
