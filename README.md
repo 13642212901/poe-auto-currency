@@ -89,12 +89,14 @@ x3,y3
 
 
 ### 热键说明
+### Keyboard shortcuts
 * alt+a 改造石 alteration
 * alt+d 机会 chance
 * alt+f 远古 ancient
 * alt+g 点金 alchemy
 * alt+h 混沌 chaos
 ### 其他：
+### Ohter
 * alt+s 手动结束 Stop
 * crtl+s 重复上次 Restart with prew action
 * alt+c 获取坐标 Get a coordinate
