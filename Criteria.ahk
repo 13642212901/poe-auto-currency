@@ -1,46 +1,75 @@
 class Criteria {
     __New(search) {
         this.search := search
+        this.filter := []
+        this.filter.Push(new StringInFilter())
+        this.filter.Push(new NumericalBetweenFilter())
     }
     Check(input) {
-        res := 1
         search := this.search
+        matchArr := StrSplit(input, "`n")
         searchArr := StrSplit(search, ",")
-
-        name := searchArr[1]
-        arr := StrSplit(input, "`n")
-        for index, val in arr {
-            StringGetPos, _, % val, % name
-            if (ErrorLevel = 0) {
-                res := 0
-                if (searchArr[2] != "" || searchArr[3] != "") {
-                    numRes := 1
-                    numArr := RegexMatches(val, "\d+(\.\d+)|\d+")
-                    if (searchArr[2] != "") {
-                        for i, num in numArr {
-                            if (searchArr[2] <= num) {
-                                numRes := 2
-                            }
-                        }
-                    }
-                    if (numRes = 2 && searchArr[3] != "") {
-                        numRes := 1
-                        for i, num in numArr {
-                            if (searchArr[3] >= num) {
-                                numRes := 2
-                            }
-                        }
-                    }
-                    if (numRes = 1) {
-                        res := 1
-                    }
-                }
-            }
+        for index, filter in this.filter {
+            matchArr := filter.doFilter(matchArr, searchArr)
         }
-        return res
+        if (matchArr.length() > 0) {
+            return 0
+        } else {
+            return 1
+        }
+    }
+
+    PushFilter(filter) {
+        this.filter.Push(filter)
     }
 }
 
+class StringInFilter {
+    doFilter(haystack, searchArr) {
+        name := searchArr[1]
+        res := 1
+        matchArr := []
+        for index, val in arr {
+            StringGetPos, _, % val, % name
+            if (ErrorLevel = 0) {
+                matchArr.Push(val)
+                res := 0
+            }
+        }
+        return matchArr
+    }
+}
+
+class NumericalBetweenFilter {
+    doFilter(haystack, searchArr) {
+        matchArr := []
+        if (searchArr[2] != "" || searchArr[3] != "") {
+            for index, val in arr {
+                numRes := 1
+                numArr := RegexMatches(val, "\d+(\.\d+)|\d+")
+                if (searchArr[2] != "") {
+                    for i, num in numArr {
+                        if (searchArr[2] <= num) {
+                            numRes := 2
+                        }
+                    }
+                }
+                if (numRes = 2 && searchArr[3] != "") {
+                    numRes := 1
+                    for i, num in numArr {
+                        if (searchArr[3] >= num) {
+                            numRes := 2
+                        }
+                    }
+                }
+                if (numRes = 2) {
+                    matchArr.Push(val)
+                }
+            }
+        }
+        return matchArr
+    }
+}
 class Group {
     __New(mode) {
         this.criteria := []

@@ -1,10 +1,13 @@
 #Include, UserInput.ahk
 #Include, Criteria.ahk
+#Include, Currency.ahk
 
 class App {
     __New(name) {
         this.s := 1
         this.name := name
+        this.scouring := []
+        this.currency:= []
     }
     initConfig() {
         if (A_ScreenWidth >= 1920 && A_ScreenWidth < 2560) {
@@ -21,8 +24,9 @@ class App {
         }
     }
     initCoordinate(c, name) {
-        this.scouring := new CoordinateGroup(c.GetType("scouring"))
-        this.currency := new CoordinateGroup(c.GetType(name))
+        f := CurrencyGroupFactory()
+        this.scouring := f.getByDecodeCurrencyType(c.GetType("scouring"))
+        this.currency := f.getByDecodeCurrencyType(c.GetType(name))
     }
     Stop() {
         this.s := 2
@@ -108,86 +112,5 @@ class App {
         } else {
             return input
         }
-    }
-}
-
-class CoordinateGroup {
-    __New(str) {
-        this.DecodeCoordinate(str)
-    }
-    Push(corrdinate) {
-        this.data.Push(corrdinate)
-    }
-
-    DecodeCoordinate(str) {
-        this.data := []
-        arr := StrSplit(str, "`n")
-        if (arr.length() = 0) {
-            MsgBox, % Recode("配置错误")
-            return
-        }
-        for index, val in arr {
-            this.Push(new Coordinate(val))
-        }
-    }
-    Use(objX, objY) {
-        res := 0
-        for index, val in this.data {
-            if (val.status = 1 && val.Use()) {
-                res := 1
-                Break
-            } else {
-                val.status := 0
-            }
-        }
-        if (res = 0) {
-            MsgBox, % Recode("通货不足")
-            return false
-        }
-        random,r,0,5
-        objX := r + objX
-        objY := r + objY
-        MouseMove, % objX, % objY
-        Sleep, 25
-        Send {LButton}
-        Sleep, 100
-        return true
-    }
-}
-
-class Coordinate {
-    __New(str) {
-        this.status := 1
-        this.DecodeCoordinate(str)
-    }
-
-    Use() {
-        Clipboard := ""
-        random,r,0,5
-        X := this.X + r
-        Y := this.Y + r
-        MouseMove, % X, % Y
-        Sleep, 25
-        Loop, 20 {
-            Send ^c
-            input := Clipboard
-            if (input != "") {
-                Send {RButton}
-                Sleep, 25
-                return true
-            }
-        }
-        this.status := 0
-        return false
-    }
-
-    DecodeCoordinate(str) {
-        coordinateArr := StrSplit(str, ",")
-        if (coordinateArr.length() != 2) {
-            MsgBox, % Recode("坐标错误" . str)
-            return
-        }
-        this.X := coordinateArr[1]
-        this.Y := coordinateArr[2]
     }
 }

@@ -15,6 +15,9 @@ class CriteriaInput {
         if (res = "") {
             return
         }
+        c := new Criteria(res)
+        c.Push(new StringInFilter())
+        c.Push(new NumericalBetweenFilter())
         resLink.criteria.Push(new Criteria(res))
         box := new ContinueBranch()
         box.Run(resLink)
