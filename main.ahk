@@ -1,80 +1,65 @@
 #ifWinActive,ahk_exe pathofexile_x64.exe
 hasRun := 2
-history := 0
 #Include, App.ahk
 #Include, Config.ahk
 
 
-alt := new App("alteration")
-chance := new App("chance")
-anc := new App("ancient")
-alc := new App("alchemy")
-chaos := new App("chaos")
+
+currencyApp := ""
 
 !a::
 if (hasRun = 2) {
-	history := 1
+	currencyApp:= new App("alteration")
     hasRun := 1
-    alt.Run()
+    currencyApp.Run()
     hasRun := 2
 }
 return
 
 !d::
 if (hasRun = 2) {
-	history := 2
+	currencyApp:= new App("chance")
     hasRun := 1
-    chance.Run()
+    currencyApp.Run()
     hasRun := 2
 }
 return
 
 !f::
 if (hasRun = 2) {
-	history := 3
+	currencyApp := new App("ancient")
     hasRun := 1
-    anc.Run()
+    currencyApp.Run()
     hasRun := 2
 }
 return
 
 !g::
 if (hasRun = 2) {
-	history := 4
+	currencyApp := new App("alchemy")
     hasRun := 1
-    alc.Run()
+    currencyApp.Run()
     hasRun := 2
 }
 return
 
 !h::
 if (hasRun = 2) {
-	history := 5
+	currencyApp := new App("chaos")
     hasRun := 1
-    chaos.Run()
+    currencyApp.Run()
     hasRun := 2
 }
 return
 
 !s::
-    alt.Stop()
-    chance.Stop()
-    anc.Stop()
-    alc.Stop()
-    chaos.Stop()
+    currencyApp.Stop()
 return
 ^s::
-	Switch history {
-	Case 1:
-	    alt.ReStart()
-	Case 2:
-	    chance.ReStart()
-	Case 3:
-	    anc.ReStart()
-	Case 4:
-	    alc.ReStart()
-	Case 5:
-	    chaos.ReStart()
+	if (hasRun = 2) {
+    	hasRun := 1
+		currencyApp.ReStart()
+    	hasRun := 2
 	}
 return
 

@@ -6,7 +6,7 @@ class Currency {
     }
     Use(X, Y) {
         Clipboard := ""
-        random,r,0,5
+        random ,r ,0 ,5
         X := this.X + r
         Y := this.Y + r
         MouseMove, % X, % Y
@@ -40,7 +40,7 @@ class CurrencyGroup {
             MsgBox, % Recode("通货不足")
             return false
         }
-        random,r,0,5
+        random ,r ,0 ,5
         objX := r + objX
         objY := r + objY
         MouseMove, % objX, % objY
@@ -56,7 +56,7 @@ class CurrencyGroup {
 }
 
 class CurrencyGroupFactory {
-    getByDecodeCurrencyType(str) {
+    GetByDecodeCurrencyType(str) {
         arr := StrSplit(str, "`n")
         if (arr.length() = 0) {
             MsgBox, % Recode("配置错误")
@@ -64,13 +64,13 @@ class CurrencyGroupFactory {
         }
         g := new CurrencyGroup()
         for index, val in arr {
-            currency := this.DecodeCoordinate(val)
+            currency := this.decodeCoordinate(val)
             g.Push(currency)
         }
         return g
     }
 
-    DecodeCoordinate(str) {
+    decodeCoordinate(str) {
         coordinateArr := StrSplit(str, ",")
         if (coordinateArr.length() != 2) {
             MsgBox, % Recode("坐标错误" . str)

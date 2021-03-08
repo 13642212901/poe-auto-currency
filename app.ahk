@@ -8,6 +8,8 @@ class App {
         this.name := name
         this.scouring := []
         this.currency:= []
+        this.log := new Log("log.txt")
+        this.f := new CurrencyGroupFactory()
     }
     initConfig() {
         if (A_ScreenWidth >= 1920 && A_ScreenWidth < 2560) {
@@ -24,9 +26,8 @@ class App {
         }
     }
     initCoordinate(c, name) {
-        f := CurrencyGroupFactory()
-        this.scouring := f.getByDecodeCurrencyType(c.GetType("scouring"))
-        this.currency := f.getByDecodeCurrencyType(c.GetType(name))
+        this.scouring := this.f.GetByDecodeCurrencyType(c.GetType("scouring"))
+        this.currency := this.f.GetByDecodeCurrencyType(c.GetType(name))
     }
     Stop() {
         this.s := 2
@@ -82,11 +83,11 @@ class App {
             return 1
         }
         res := this.l.Check(input)
-        FileAppend , %input%, log.txt
+        this.log.info(input)
         if (res = 1) {
-            FileAppend , success`n`n, log.txt
+            this.log.info("success`n")
         } else {
-            FileAppend , error`n`n, log.txt
+            this.log.info("error`n")
         }
         return res
     }
