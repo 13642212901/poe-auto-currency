@@ -1,7 +1,7 @@
 # AC
 
-## 核心功能
-## Core functions
+### 核心功能
+### Core functions
 * 通过配置文件不限制分辨率
 * Auto use currency to match affix
 * 辅助获取坐标功能
