@@ -1,5 +1,16 @@
 # AC
 
+## 核心功能
+## Core functions
+* 通过配置文件不限制分辨率
+* Auto use currency to match affix
+* 辅助获取坐标功能
+* Get your mouse coordinate
+* 必须在游戏中使用
+* Must use in the poe process
+* 使用后会在当前目录增加log.txt日志，列出每次洗通货获得的词缀和是否匹配成功（成功：success 失败：error）
+* There will be a log.Each cycle, record the item affix and match result
+
 ### 分辨率使用说明
 ### R.P. Explain
 * 默认只配置了2560x1440，1920*1080
